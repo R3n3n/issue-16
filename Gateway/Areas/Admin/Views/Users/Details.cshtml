@@ -1,0 +1,219 @@
+﻿@model ITElectiveSSO.Models.ApplicationUser
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "User Details";
+}
+
+@Html.AntiForgeryToken()
+
+<style>
+    body {
+        background-color: #f0f4f9;
+    }
+
+    .dark-card {
+        background-color: #101625 !important;
+        border-radius: 10px;
+        border: none;
+        color: #ffffff;
+    }
+
+    .dark-header {
+        background-color: #101625 !important;
+        border-radius: 10px;
+        color: #ffffff;
+        padding: 16px 24px;
+    }
+
+    .badge-active-green {
+        background-color: #00c853;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 6px;
+    }
+
+    .badge-suspended-gray {
+        background-color: #6c757d;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 6px;
+    }
+
+    .detail-label {
+        min-width: 130px;
+        color: #a0aec0;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    .detail-value {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .temp-password-box {
+        background-color: #1a2332;
+        border: 1px solid #2a3547;
+        border-radius: 6px;
+        padding: 16px;
+        max-width: 480px;
+    }
+
+    .btn-azure-sm {
+        background-color: #0088cc;
+        color: #ffffff;
+        border: none;
+        font-weight: 600;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        border-radius: 5px;
+    }
+
+        .btn-azure-sm:hover {
+            background-color: #0077b5;
+            color: #ffffff;
+        }
+
+    .modal-dark-content {
+        background-color: #101625;
+        color: #ffffff;
+        border: 1px solid #2a3447;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="container-fluid px-4 py-3" id="userDetailsContainer" data-user-id="@Model.Id">
+    <!-- Top Header Banner -->
+    <div class="dark-header mb-3 shadow-sm d-flex justify-content-between align-items-center">
+        <h3 class="fw-bold mb-0">User Details</h3>
+        <a asp-area="Admin" asp-controller="Users" asp-action="Index" class="btn btn-outline-light btn-sm">
+            &laquo; Back to List
+        </a>
+    </div>
+
+    <!-- Main Content Dark Card -->
+    <div class="dark-card p-4 shadow w-100">
+        <div class="row g-4 mb-2">
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-center">
+                    <span class="detail-label">Email:</span>
+                    <span id="detailEmail" class="detail-value text-break">@Model.Email</span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-center">
+                    <span class="detail-label">Status:</span>
+                    <div>
+                        @if (Model.IsActive)
+                        {
+                            <span id="detailStatus" class="badge badge-active-green">Active</span>
+                        }
+                        else
+                        {
+                            <span id="detailStatus" class="badge badge-suspended-gray">Inactive</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-center">
+                    <span class="detail-label">Created At:</span>
+                    <span class="detail-value">@Model.CreatedAt.ToLocalTime().ToString("MM/dd/yyyy HH:mm")</span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="d-flex align-items-center">
+                    <span class="detail-label">Last Login:</span>
+                    <span id="detailLastLogin" class="detail-value">
+                        @(Model.LastLoginAt.HasValue
+                            ? Model.LastLoginAt.Value.ToLocalTime().ToString("MM/dd/yyyy HH:mm")
+                            : "Never")
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Groups Management Section -->
+        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+            <h5 class="fw-bold text-light mb-3">Assigned Groups</h5>
+            <ul id="assigned-groups-list" class="list-group mb-3">
+                <!-- Populated dynamically via loadAssignedGroups() -->
+            </ul>
+
+            <div class="row g-2 align-items-center">
+                <div class="col-md-6">
+                    <select id="available-groups-dropdown" class="form-select bg-dark text-white border-secondary">
+                        <option value="">Loading available groups...</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-azure-sm w-100 py-2" onclick="assignGroup()">Assign Group</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Temporary Password Box -->
+        <div id="tempPasswordSection" class="temp-password-box mt-4 d-none">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-light small fw-semibold">Temporary Password:</span>
+                <button type="button" class="btn btn-azure-sm" onclick="copyTempPasswordToClipboard()">Copy to Clipboard</button>
+            </div>
+            <div id="tempPasswordDisplay" class="fw-bold text-white fs-6 font-monospace"></div>
+        </div>
+
+        <!-- Reset Password Action -->
+        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+            <button type="button" class="btn btn-secondary px-3 py-2" data-bs-toggle="modal" data-bs-target="#resetConfirmModal">
+                Reset Password
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Reset Modal -->
+<div class="modal fade" id="resetConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dark-content shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Confirm Password Reset</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                <p class="mb-0 text-white fs-6">Are you sure you want to reset the password for this user?</p>
+            </div>
+            <div class="modal-footer border-0 pt-0 d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="triggerPasswordReset('@Model.Id')">Confirm Reset</button>
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="resetSuccessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dark-content shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Reset Password</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                <p class="mb-0 text-white fs-6 fw-semibold">Reset password successfully.</p>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-users.js" asp-append-version="true"></script>
+}

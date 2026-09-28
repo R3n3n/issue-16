@@ -1,0 +1,71 @@
+﻿@{
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+}
+
+<div class="d-lg-none bg-dark text-white p-3 d-flex justify-content-between align-items-center shadow-sm">
+    <div class="d-flex align-items-center">
+        <img src="~/images/logo.png"
+             alt="Logo"
+             class="img-fluid rounded-circle me-2 object-fit-cover"
+             style="width: 32px; height: 32px;"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/32/0d6efd/ffffff?text=LOGO';" />
+        <span class="fs-5 fw-bold">Test Test</span>
+    </div>
+    <button class="btn btn-outline-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminSidebar" aria-controls="adminSidebar">
+        <i class="bi bi-list fs-4"></i>
+    </button>
+</div>
+
+<div class="offcanvas-lg offcanvas-start text-white bg-dark sidebar flex-shrink-0 p-3 d-flex flex-column" tabindex="-1" id="adminSidebar" aria-labelledby="adminSidebarLabel" style="width: 260px;">
+    <div class="offcanvas-header d-lg-none pb-2 border-bottom border-secondary">
+        <h5 class="offcanvas-title fw-bold text-white" id="adminSidebarLabel">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#adminSidebar" aria-label="Close"></button>
+    </div>
+
+    <a href="/" class="d-none d-lg-flex align-items-center mb-3 text-white text-decoration-none px-2 py-2">
+        <div class="me-3 d-flex align-items-center justify-content-center flex-shrink-0">
+            <img src="~/images/logo.png"
+                 alt="Logo"
+                 class="img-fluid rounded-circle object-fit-cover"
+                 style="width: 44px; height: 44px;"
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/44/0d6efd/ffffff?text=LOGO';" />
+        </div>
+        <span class="fs-4 fw-bold tracking-wide">Test Test</span>
+    </a>
+    <hr class="my-3 opacity-25 d-none d-lg-block">
+
+    <ul class="nav nav-pills flex-column mb-3 mt-3 mt-lg-0">
+        <li class="nav-item mb-2">
+            <a asp-controller="Admin" asp-action="Index"
+               class="nav-link text-white fs-5 py-2.5 px-3 @(currentAction.Equals("Index", StringComparison.OrdinalIgnoreCase) ? "active" : "")">
+                <i class="bi bi-speedometer2 me-3 fs-5"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a asp-controller="Admin" asp-action="Users"
+               class="nav-link text-white fs-5 py-2.5 px-3 @(currentAction.Equals("Users", StringComparison.OrdinalIgnoreCase) ? "active" : "")">
+                <i class="bi bi-people me-3 fs-5"></i> Users
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a asp-controller="Admin" asp-action="Apps"
+               class="nav-link text-white fs-5 py-2.5 px-3 @(currentAction.Equals("Apps", StringComparison.OrdinalIgnoreCase) ? "active" : "")">
+                <i class="bi bi-app-indicator me-3 fs-5"></i> Apps
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a asp-controller="Admin" asp-action="Groups"
+               class="nav-link text-white fs-5 py-2.5 px-3 @(currentAction.Equals("Groups", StringComparison.OrdinalIgnoreCase) ? "active" : "")">
+                <i class="bi bi-diagram-3 me-3 fs-5"></i> Groups
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a asp-controller="Admin" asp-action="AuditLogs"
+               class="nav-link text-white fs-5 py-2.5 px-3 @(currentAction.Equals("AuditLogs", StringComparison.OrdinalIgnoreCase) ? "active" : "")">
+                <i class="bi bi-journal-text me-3 fs-5"></i> Audit Logs
+            </a>
+        </li>
+    </ul>
+
+    @await Html.PartialAsync("_AdminLogout")
+</div>

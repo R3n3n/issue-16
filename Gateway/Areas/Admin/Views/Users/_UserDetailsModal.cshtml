@@ -1,0 +1,135 @@
+﻿<style>
+    .badge-active-green {
+        background-color: #00c853;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 6px;
+    }
+
+    .badge-suspended-gray {
+        background-color: #6c757d;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 6px;
+    }
+
+    .detail-label {
+        min-width: 130px;
+        color: #a0aec0;
+        font-size: 0.90rem;
+        font-weight: 500;
+    }
+
+    .detail-value {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.90rem;
+    }
+
+    .temp-password-box {
+        background-color: #1a2332;
+        border: 1px solid #2a3547;
+        border-radius: 6px;
+        padding: 12px;
+    }
+
+    .btn-azure-sm {
+        background-color: #0088cc;
+        color: #ffffff;
+        border: none;
+        font-weight: 600;
+        padding: 4px 12px;
+        font-size: 0.85rem;
+        border-radius: 5px;
+    }
+
+        .btn-azure-sm:hover {
+            background-color: #0077b5;
+            color: #ffffff;
+        }
+</style>
+
+<div class="modal fade" id="userDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dark-content shadow-lg" style="background-color: #101625; color: #ffffff;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">User Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="detail-label">Email:</span>
+                    <span id="detailEmail" class="detail-value text-break" data-testid="detail-email">-</span>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <span class="detail-label">Status:</span>
+                    <div>
+                        <span id="detailStatus" class="badge" data-testid="detail-status">-</span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <span class="detail-label">Group:</span>
+                    <span id="detailGroups" class="detail-value" data-testid="detail-groups">-</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <span class="detail-label">Last Logged in:</span>
+                    <span id="detailLastLogin" class="detail-value" data-testid="detail-last-login">-</span>
+                </div>
+
+                <!-- LLORENTE i5-->
+                <div id="tempPasswordSection" class="temp-password-box mt-3 d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-light small fw-semibold">Temporary Password:</span>
+                        <!-- FACTOR i5-->
+                        <button type="button" class="btn btn-azure-sm" onclick="copyTempPasswordToClipboard()">Copy to Clipboard</button>
+                    </div>
+                    <div id="tempPasswordDisplay" class="fw-bold text-white fs-6 font-monospace">Test_123!</div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0 d-flex justify-content-end gap-2">
+                <!-- DAYGON i5-->
+                <button type="button" class="btn btn-secondary px-3" data-bs-toggle="modal" data-bs-target="#resetConfirmModal">Reset Password</button>
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MANZANO i5-->
+<div class="modal fade" id="resetConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dark-content shadow-lg" style="background-color: #101625; color: #ffffff;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Confirm Password Reset</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                <p class="mb-0 text-white fs-6">Are you sure you want to reset the password for this user?</p>
+            </div>
+            <div class="modal-footer border-0 pt-0 d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-primary px-3" data-bs-dismiss="modal" onclick="triggerPasswordReset()">Confirm Reset</button>
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VILLAMOR i5-->
+<div class="modal fade" id="resetSuccessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dark-content shadow-lg" style="background-color: #101625; color: #ffffff;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Reset Password</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                <p class="mb-0 text-white fs-6 fw-semibold">Reset password successfully.</p>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

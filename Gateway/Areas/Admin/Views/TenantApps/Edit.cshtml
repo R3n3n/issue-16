@@ -1,0 +1,195 @@
+﻿<!-- daygon -->
+@model Gateway.Areas.Admin.Models.TenantAppViewModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Edit Tenant App";
+}
+
+<style>
+    body {
+        background-color: #f0f4f9;
+    }
+
+    .dark-card {
+        background-color: #101625 !important;
+        border-radius: 10px;
+        border: none;
+        color: #ffffff;
+    }
+
+    .dark-header {
+        background-color: #101625 !important;
+        border-radius: 10px;
+        color: #ffffff;
+        padding: 16px 24px;
+    }
+
+    .custom-dark-table {
+        width: 100%;
+        color: #ffffff;
+        background-color: transparent !important;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .custom-dark-table th {
+            color: #8a99ad;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-bottom: 1px solid #232d3f;
+            padding: 16px 12px;
+        }
+
+        .custom-dark-table td {
+            border-bottom: 1px solid #1a2232;
+            padding: 16px 12px;
+            color: #d1d5db;
+        }
+
+    .btn-azure {
+        background-color: #0088cc;
+        color: #ffffff;
+        border: none;
+        font-weight: 600;
+    }
+
+    .btn-view-blue {
+        background-color: #0088cc;
+        color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 5px;
+        font-size: 0.85rem;
+    }
+
+    .btn-delete-red {
+        background-color: #e55353;
+        color: #ffffff;
+        padding: 6px 16px;
+        border-radius: 5px;
+        font-size: 0.85rem;
+    }
+
+    .badge-active-green {
+        background-color: #00c853;
+        color: #ffffff;
+        padding: 6px 14px;
+        border-radius: 6px;
+    }
+
+    .search-input-dark {
+        border-radius: 6px;
+        border: none;
+        padding-left: 38px;
+        background-color: #ffffff;
+    }
+
+    .search-icon-inside {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+    }
+
+    .modal-dark-content {
+        background-color: #182030;
+        color: #ffffff;
+        border: 1px solid #2a3447;
+        border-radius: 8px;
+    }
+
+    .modal-dark-input {
+        background-color: #ffffff;
+        border: 1px solid #ced4da;
+        color: #000000;
+        border-radius: 4px;
+    }
+
+    .btn-modal-cancel {
+        background-color: #6c757d;
+        color: #ffffff;
+        border: none;
+    }
+</style>
+
+<div class="container-fluid px-4 py-3" style="filter: brightness(0.65); pointer-events: none;">
+    <div class="dark-header mb-3 shadow-sm">
+        <h3 class="fw-bold mb-0">Tenant App Management</h3>
+    </div>
+
+    <div class="dark-card p-4 shadow">
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25">
+            <div class="position-relative" style="width: 320px;">
+                <i class="bi bi-search search-icon-inside"></i>
+                <input type="text" class="form-control search-input-dark" placeholder="Search by App Name" disabled>
+            </div>
+            <button class="btn btn-azure px-3 py-2 rounded-2" disabled>+ Add New App</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="custom-dark-table align-middle">
+                <thead>
+                    <tr>
+                        <th class="ps-2" style="width: 25%;">APP NAME</th>
+                        <th style="width: 30%;">RETURN URL</th>
+                        <th style="width: 15%;">STATUS</th>
+                        <th class="text-center" style="width: 15%;">ACTIVE TOGGLE</th>
+                        <th class="text-end pe-2" style="width: 15%;">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="ps-2 fw-medium text-white">@Model.Name</td>
+                        <td>@Model.ReturnUrl</td>
+                        <td><span class="badge badge-active-green">Active</span></td>
+                        <td class="text-center">
+                            <span class="me-2 fw-bold small text-light">ON</span>
+                            <input class="form-check-input" type="checkbox" checked disabled />
+                        </td>
+                        <td class="text-end pe-2">
+                            <span class="btn btn-view-blue me-2">Edit</span>
+                            <span class="btn btn-delete-red">Delete</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-backdrop fade show" style="background-color: rgba(0, 0, 0, 0.4);"></div>
+
+<div class="modal show d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-dark-content shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Edit Tenant App</h5>
+                <a asp-action="Index" class="btn-close btn-close-white" aria-label="Close"></a>
+            </div>
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label fw-semibold small text-light">Application Name</label>
+                        <input asp-for="Name" class="form-control modal-dark-input" required />
+                        <span asp-validation-for="Name" class="text-danger small mt-1 d-block"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ReturnUrl" class="form-label fw-semibold small text-light">Return URL</label>
+                        <input asp-for="ReturnUrl" class="form-control modal-dark-input" required />
+                        <span asp-validation-for="ReturnUrl" class="text-danger small mt-1 d-block"></span>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <a asp-action="Index" class="btn btn-modal-cancel px-3">Cancel</a>
+                    <button type="submit" class="btn btn-azure px-3">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

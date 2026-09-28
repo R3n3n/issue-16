@@ -1,0 +1,66 @@
+﻿<style>
+    .modal-dark-content {
+        background-color: #182030;
+        color: #ffffff;
+        border: 1px solid #2a3447;
+        border-radius: 8px;
+    }
+
+    .modal-dark-input {
+        background-color: #ffffff;
+        border: 1px solid #ced4da;
+        color: #000000;
+        border-radius: 4px;
+    }
+
+    .btn-modal-cancel {
+        background-color: #6c757d;
+        color: #ffffff;
+        border: none;
+    }
+
+    .btn-modal-create {
+        background-color: #8a99ad;
+        color: #ffffff;
+        border: none;
+    }
+</style>
+
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-dark-content shadow-lg">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Create New User</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="createUserForm" onsubmit="handleCreateUserSubmit(event)">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="createEmail" class="form-label fw-semibold small text-light">Email Address</label>
+                        <input type="email" id="createEmail" name="Email" class="form-control modal-dark-input" placeholder="user@gmail.com" required data-testid="input-email">
+                        <!-- Email specific error below input -->
+                        <div id="emailError" class="text-danger small mt-1 d-none" data-testid="email-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createPassword" class="form-label fw-semibold small text-light">Temporary Password</label>
+                        <input type="password" id="createPassword" name="Password" class="form-control modal-dark-input" required minlength="6" data-testid="input-password">
+                        <!-- Password specific error below input -->
+                        <div id="passwordError" class="text-danger small mt-1 d-none" data-testid="password-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="createConfirmPassword" class="form-label fw-semibold small text-light">Confirm Password</label>
+                        <input type="password" id="createConfirmPassword" name="ConfirmPassword" class="form-control modal-dark-input" required data-testid="input-confirm-password">
+                        <!-- Password mismatch error below input -->
+                        <div id="confirmPasswordError" class="text-danger small mt-1 d-none" data-testid="password-mismatch-error">
+                            Passwords do not match!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-modal-cancel px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-modal-create px-3" data-testid="submit-create-user-btn">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

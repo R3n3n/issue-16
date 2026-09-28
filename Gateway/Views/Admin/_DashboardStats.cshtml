@@ -1,0 +1,60 @@
+﻿@{
+    int totalUsers = ViewBag.TotalUsers ?? 0;
+    int activeApps = ViewBag.ActiveApps ?? 0;
+    int assignedGroups = ViewBag.AssignedGroups ?? 0;
+    int auditEvents = ViewBag.AuditEvents ?? 0;
+}
+
+<div class="row g-2 g-md-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="card bg-dark text-white shadow-sm border-0 h-100">
+            <div class="card-body stat-card-body d-flex flex-column justify-content-between">
+                <h6 class="card-subtitle text-white opacity-75 text-uppercase mb-2">
+                    TOTAL USERS
+                </h6>
+                <h2 class="card-title fw-bold mb-0">
+                    @totalUsers
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="card bg-dark text-white shadow-sm border-0 h-100">
+            <div class="card-body stat-card-body d-flex flex-column justify-content-between">
+                <h6 class="card-subtitle text-white opacity-75 text-uppercase mb-2">
+                    ACTIVE APPS
+                </h6>
+                <h2 class="card-title fw-bold mb-0">
+                    @activeApps
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="card bg-dark text-white shadow-sm border-0 h-100">
+            <div class="card-body stat-card-body d-flex flex-column justify-content-between">
+                <h6 class="card-subtitle text-white opacity-75 text-uppercase mb-2">
+                    ASSIGNED GROUPS
+                </h6>
+                <h2 class="card-title fw-bold mb-0">
+                    @assignedGroups
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-3">
+        <div class="card bg-dark text-white shadow-sm border-0 h-100">
+            <div class="card-body stat-card-body d-flex flex-column justify-content-between">
+                <h6 class="card-subtitle text-white opacity-75 text-uppercase mb-2">
+                    AUDIT EVENTS
+                </h6>
+                <h2 class="card-title fw-bold mb-0">
+                    @auditEvents
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>

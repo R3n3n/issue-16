@@ -1,0 +1,231 @@
+﻿@model IEnumerable<ITElectiveSSO.Models.ApplicationUser>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "User Management";
+}
+
+<style>
+    body {
+        background-color: #f0f4f9;
+    }
+
+    .dark-card {
+        background-color: #101625 !important;
+        border-radius: 10px;
+        border: none;
+        color: #ffffff;
+    }
+
+    .dark-header {
+        background-color: #101625 !important;
+        border-radius: 10px;
+        color: #ffffff;
+        padding: 16px 24px;
+    }
+
+    .custom-dark-table {
+        width: 100%;
+        color: #ffffff;
+        background-color: transparent !important;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        .custom-dark-table th {
+            color: #8a99ad;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #232d3f;
+            padding: 16px 12px;
+            background-color: transparent !important;
+        }
+
+        .custom-dark-table td {
+            border-bottom: 1px solid #1a2232;
+            padding: 16px 12px;
+            vertical-align: middle;
+            color: #d1d5db;
+            background-color: transparent !important;
+        }
+
+        .custom-dark-table tr {
+            background-color: transparent !important;
+        }
+
+    .btn-azure {
+        background-color: #0088cc;
+        color: #ffffff;
+        border: none;
+        font-weight: 600;
+    }
+
+        .btn-azure:hover {
+            background-color: #0077b5;
+            color: #ffffff;
+        }
+
+    .btn-view-blue {
+        background-color: #0088cc;
+        color: #ffffff;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 5px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .btn-delete-red {
+        background-color: #e55353;
+        color: #ffffff;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 5px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-active-green {
+        background-color: #00c853;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 6px;
+    }
+
+    .badge-suspended-gray {
+        background-color: #6c757d;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 6px;
+    }
+
+    .search-input-dark {
+        border-radius: 6px;
+        border: none;
+        padding-left: 38px;
+        background-color: #ffffff;
+        color: #000000;
+    }
+
+    .search-icon-inside {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        color: #6c757d;
+    }
+</style>
+
+<div class="container-fluid px-4 py-3">
+    <!-- Top Header Banner -->
+    <div class="dark-header mb-3 shadow-sm">
+        <h3 class="fw-bold mb-0">User Management</h3>
+    </div>
+
+    <!-- Main Content Dark Card -->
+    <div class="dark-card p-4 shadow">
+        <!-- Search & Add User Bar -->
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary border-opacity-25">
+            <div class="position-relative" style="width: 320px;">
+                <i class="bi bi-search search-icon-inside"></i>
+                <input type="text" id="emailSearchInput" class="form-control search-input-dark" placeholder="Search by Email" onkeyup="filterUsersByEmail()" data-testid="search-email-input">
+            </div>
+            <button type="button" class="btn btn-azure px-3 py-2 rounded-2" data-bs-toggle="modal" data-bs-target="#createUserModal" data-testid="add-user-btn">
+                + Add New User
+            </button>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-responsive">
+            <table class="custom-dark-table align-middle" id="usersTable" data-testid="users-table">
+                <thead>
+                    <tr>
+                        <th class="ps-2" style="width: 30%;">EMAIL</th>
+                        <th style="width: 20%;">CREATED DATE</th>
+                        <th style="width: 15%;">STATUS</th>
+                        <th class="text-center" style="width: 15%;">ACTIVE TOGGLE</th>
+                        <th class="text-end pe-2" style="width: 20%;">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var user in Model)
+                        {
+                            <tr data-user-id="@user.Id">
+                                <td class="ps-2 fw-medium text-white user-email">@user.Email</td>
+                                <td>@user.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    @if (user.IsActive)
+                                    {
+                                        <span class="badge badge-active-green status-badge">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-suspended-gray status-badge">Suspended</span>
+                                    }
+                                </td>
+                                <td class="text-center">
+                                    <span class="me-2 fw-bold small @(user.IsActive ? "text-light" : "text-secondary") toggle-label">
+                                        @(user.IsActive ? "ON" : "OFF")
+                                    </span>
+
+                                    <form asp-area="Admin" asp-controller="UserController" asp-action="ToggleActive" asp-route-id="@user.Id" method="post" class="d-inline">
+                                        <div class="form-check form-switch d-inline-block align-middle mb-0">
+                                            <input class="form-check-input user-toggle-switch"
+                                                   type="checkbox"
+                                                   @(user.IsActive ? "checked" : "")
+                                                   id="toggle_@user.Id"
+                                                   onchange="toggleUserStatus('@user.Id', this)"
+                                                   data-testid="toggle-user-@user.Id"
+                                                   style="cursor: pointer;">
+                                        </div>
+                                    </form>
+                                </td>
+                                <td class="text-end pe-2">
+                                    <button class="btn btn-view-blue me-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#userDetailsModal"
+                                            data-email="@user.Email"
+                                            data-active="@user.IsActive.ToString().ToLower()"
+                                            data-created="@user.CreatedAt.ToString("yyyy-MM-dd HH:mm")"
+                                            onclick="loadUserDetails(this)"
+                                            data-testid="view-user-@user.Id">
+                                        View
+                                    </button>
+
+                                    <button class="btn btn-delete-red"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteUserModal"
+                                            onclick="setDeleteUserTarget('@user.Id', '@user.Email')"
+                                            data-testid="delete-user-@user.Id">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">No users found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Render Modals directly from local folder -->
+@await Html.PartialAsync("_CreateUserModal")
+@await Html.PartialAsync("_UserDetailsModal")
+@await Html.PartialAsync("_DeleteUserModal")
+
+@section Scripts {
+    <script src="~/js/admin-users.js" asp-append-version="true"></script>
+}

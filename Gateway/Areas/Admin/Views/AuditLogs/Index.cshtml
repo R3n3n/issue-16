@@ -1,0 +1,60 @@
+﻿@model Gateway.Models.PaginatedList<AuditLog>
+
+@{
+    ViewData["Title"] = "Audit Logs";
+}
+
+<h1>Audit Logs</h1>
+
+<form method="get" class="form-inline mb-3">
+    <label for="fromDate" class="mr-2">From:</label>
+    <input type="date" id="fromDate" name="fromDate" value="@ViewData["FromDate"]" class="form-control mr-3" />
+
+    <label for="toDate" class="mr-2">To:</label>
+    <input type="date" id="toDate" name="toDate" value="@ViewData["ToDate"]" class="form-control mr-3" />
+
+    <button type="submit" class="btn btn-primary">Filter</button>
+    <a asp-action="Index" class="btn btn-secondary">Clear</a>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Action</th>
+            <th>Details</th>
+            <th>IP Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>@log.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td>@log.Action</td>
+                <td>@log.Details</td>
+                <td>@log.IpAddress</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageIndex="@(Model.PageIndex - 1)"
+   asp-route-fromDate="@ViewData["FromDate"]"
+   asp-route-toDate="@ViewData["ToDate"]"
+   class="btn btn-outline-secondary @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageIndex="@(Model.PageIndex + 1)"
+   asp-route-fromDate="@ViewData["FromDate"]"
+   asp-route-toDate="@ViewData["ToDate"]"
+   class="btn btn-outline-secondary @nextDisabled">
+    Next
+</a>

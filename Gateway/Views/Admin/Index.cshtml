@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "System Overview";
+}
+
+<div class="container-fluid p-0">
+    <h2 class="fw-bold mb-4">System Overview</h2>
+
+    @await Html.PartialAsync("_DashboardStats")
+
+    <h4 class="fw-bold mt-4 mb-3">Recent System Audit Logs</h4>
+
+    @await Html.PartialAsync("_AuditLogsTable")
+</div>

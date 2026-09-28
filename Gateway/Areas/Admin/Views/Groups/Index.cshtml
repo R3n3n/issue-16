@@ -1,0 +1,38 @@
+﻿@model List<Group>
+
+@{
+    ViewData["Title"] = "Groups";
+}
+
+<h1>Groups</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<p><a asp-action="Create" class="btn btn-primary">Create New Group</a></p>
+
+<table class="table">
+    <thead>
+        <tr><th>App</th><th>Group Name</th><th>Power Level</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+            <tr>
+                <td>@group.TenantApp.Name</td>
+                <td>@group.Name</td>
+                <td>@group.PowerLevel</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@group.Id">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@group.Id" method="post"
+                          style="display:inline"
+                          onsubmit="return confirm('Remove this group? This cannot be undone.');">
+                        <button type="submit" class="btn btn-link text-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,22 @@
+﻿@media (min-width: 992px) {
+    .sidebar {
+        min-height: 100vh !important;
+        position: sticky;
+        top: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .offcanvas-lg.sidebar {
+        background-color: #111827 !important;
+        width: 280px !important;
+    }
+
+    #page-content-wrapper {
+        padding: 1rem !important;
+    }
+
+    .card-title.display-4 {
+        font-size: 2.25rem !important;
+    }
+}

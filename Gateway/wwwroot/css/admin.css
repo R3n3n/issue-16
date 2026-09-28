@@ -1,0 +1,55 @@
+﻿body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar,
+.sidebar.bg-dark,
+.card.bg-dark {
+    background-color: #111827 !important;
+}
+
+    .sidebar .nav-link {
+        font-size: 1.125rem !important;
+        font-weight: 500;
+        color: #9ca3af !important;
+        border-radius: 8px;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .sidebar .nav-link i {
+            font-size: 1.25rem !important;
+            vertical-align: middle;
+        }
+
+        .sidebar .nav-link.active,
+        .sidebar .nav-link:hover {
+            background-color: #1f2937 !important;
+            color: #ffffff !important;
+        }
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+@media (min-width: 992px) {
+    .card.bg-dark .card-body,
+    .stat-card-body {
+        min-height: 180px !important;
+        padding: 2rem !important;
+    }
+
+        .card.bg-dark .card-title,
+        .stat-card-body .card-title {
+            font-size: 3.5rem !important;
+        }
+
+        .card.bg-dark .card-subtitle,
+        .stat-card-body .card-subtitle {
+            font-size: 1.1rem !important;
+            letter-spacing: 1px !important;
+            font-weight: 600 !important;
+        }
+}

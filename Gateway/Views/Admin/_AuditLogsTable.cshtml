@@ -1,0 +1,51 @@
+﻿@{
+    bool hasData = ViewBag.HasData ?? false;
+}
+
+<div class="card border-0 shadow-sm" style="min-height: 350px;">
+    <div class="card-body p-0 d-flex flex-column">
+        <div class="table-responsive flex-grow-1">
+            <table class="table table-hover align-middle mb-0 h-100">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3 py-3">USERID</th>
+                        <th class="py-3">EMAIL</th>
+                        <th class="py-3">ROLE</th>
+                        <th class="py-3">TIMESTAMP</th>
+                        <th class="py-3">STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!hasData)
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted align-middle">
+                                <div class="py-4">
+                                    <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                                    <span class="fs-6 fw-normal">No audit logs available.</span>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="ps-3 font-monospace py-3">user267385637</td>
+                            <td class="py-3">example@gmail.com</td>
+                            <td class="py-3">Administrator</td>
+                            <td class="py-3">2026-08-26 17:10</td>
+                            <td class="py-3"><span class="badge bg-success-subtle text-success border border-success px-3 py-2">Success</span></td>
+                        </tr>
+                        <tr>
+                            <td class="ps-3 font-monospace py-3">user748595738</td>
+                            <td class="py-3">example123@gmail.com</td>
+                            <td class="py-3">User</td>
+                            <td class="py-3">2026-08-26 17:10</td>
+                            <td class="py-3"><span class="badge bg-danger-subtle text-danger border border-danger px-3 py-2">Failed</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

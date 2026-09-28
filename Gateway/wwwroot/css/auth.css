@@ -1,0 +1,229 @@
+﻿/* Customize layout and branding -CABARDO */
+:root {
+    --sso-navy: #0f1b33;
+    --sso-navy-light: #16233f;
+    --sso-blue: #1e88d8;
+    --sso-blue-hover: #1876ba;
+    --sso-gray-field: #cfd3d8;
+    --sso-text-dark: #1b1f27;
+    /* Style error messages clearly -CABARDO */
+    --sso-error: #c0392b;
+    --sso-error-bg: #fdecea;
+    --sso-line: #d7dbe0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--sso-text-dark);
+    background-color: #0b1329;
+}
+
+.sso-page {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 2rem 1rem;
+}
+
+/* Customize layout and branding - CABARDO */
+.sso-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url('../images/circuit-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
+
+
+/* Add SSO title "IT ELECTIVE - SSO" - CABARDO */
+.sso-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+}
+
+.sso-title-dash {
+    color: var(--sso-blue);
+}
+
+.sso-subtitle {
+    margin: 0.25rem 0 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--sso-blue);
+}
+
+/* Display app name if provided in returnUrl - LLORENTE */
+.sso-app-context {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+}
+
+.sso-card {
+    background: var(--sso-navy);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Style error messages clearly - CABARDO */
+.sso-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    background: var(--sso-error-bg);
+    color: var(-- :root {
+    --sso-navy: #0f1b33;
+    --sso-navy-light: #16233f;
+    --sso-blue: #1e88d8;
+    --sso-blue-hover: #1876ba;
+    --sso-gray-field: #cfd3d8;
+    --sso-text-dark: #1b1f27;
+    /* Style error messages clearly - CABARDO */
+    --sso-error: #c0392b;
+    --sso-error-bg: #fdecea;
+    --sso-line: #d7dbe0;
+} * {
+    box-sizing: border-box;
+} body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--sso-text-dark);
+    background-color: #0b1329;
+} .sso-page {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 2rem 1rem;
+}
+    /* Customize layout and branding - CABARDO */
+    .sso-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url('../images/circuit-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
+    /* Add SSO title "IT ELECTIVE - SSO" - CABARDO */
+    .sso-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+} .sso-title-dash {
+    color: var(--sso-blue);
+}
+    /* Display app name if provided in returnUrl - LLORENTE */
+    .sso-app-context {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+} .sso-card {
+    background: var(--sso-navy);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+    /* Style error messages clearly - CABARDO */
+    .sso-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    background: var(--sso-error-bg);
+    color: var(--sso-error);
+    border: 1px solid var(--sso-error);
+    border-radius: 6px;
+    padding: 0.75rem 0.9rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+} .sso-alert-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+    /* Ensure form is accessible (labels, aria attributes) - FACTOR */
+    .sso-field {
+    margin-bottom: 1.25rem;
+} .sso-field label {
+        display: block;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    } 
+    
+    .sso-field input[type="email"], .sso-field input[type="password"] {
+        width: 100%;
+        padding: 0.65rem 0.75rem;
+        border: none;
+        border-radius: 4px;
+        background: var(--sso-gray-field);
+        font-size: 0.95rem;
+    } 
+    
+    .sso-field input:focus {
+        outline: 3px solid var(--sso-blue);
+        outline-offset: 1px;
+    } .sso-field input[aria-invalid="true"] {
+        outline: 2px solid var(--sso-error);
+    }
+    /* Style error messages clearly - CABARDO */
+    .sso-field-error {
+    display: block;
+    color: #ff8a80;
+    font-size: 0.8rem;
+    margin-top: 0.35rem;
+} .sso-remember {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+} .sso-remember label {
+        color: #ffffff;
+        font-size: 0.9rem;
+        font-weight: 600;
+    } .sso-submit {
+    width: 100%;
+    padding: 0.7rem;
+    background: var(--sso-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+} .sso-submit:hover, .sso-submit:focus {
+        background: var(--sso-blue-hover);
+    }
+    /* Remove/lock down registration links - DAYGON */
+    .sso-footer {
+        margin-top: 1.25rem;
+        font-size: 0.8rem;
+        color: #94a3b8;
+    }
+}
