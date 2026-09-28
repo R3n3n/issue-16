@@ -33,6 +33,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    options.Lockout.AllowedForNewUsers = true;
 })
 .AddEntityFrameworkStores<SsoDbContext>()
 .AddDefaultTokenProviders();
@@ -44,6 +45,17 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ExpireTimeSpan = TimeSpan.FromHours(9);
     options.SlidingExpiration = true;
 });
+
+builder.Services.AddScoped<IJwtTokenService, Gateway.Services.JwtTokenService>();
+
+// ===== TASK 13: Configure CORS for external client apps =====
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ExternalClients", policy =>
+        policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod());
+});
+// ===== END TASK 13 =====
 
 builder.Services.AddScoped<IReturnUrlValidator, Gateway.Services.ReturnUrlValidator>();
 
@@ -62,6 +74,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCors("ExternalClients");
 
 // IMPORTANT: Authentication must come before Authorization
 app.UseAuthentication();
